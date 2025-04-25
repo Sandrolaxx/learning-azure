@@ -268,3 +268,9 @@ Print da tela de cadastro✨
 Print da tela de listagem de produto✨
 
 ![pt-09-listagem-produtos](https://github.com/user-attachments/assets/6e4386e3-f52d-4dd6-a764-b38f39891c3e)
+
+---
+
+## ATENÇÃO
+
+Não se esqueça de acessar seu resource group e encerrar todos os recuros!
