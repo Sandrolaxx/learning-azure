@@ -1,0 +1,31 @@
+# Estágio 1: Build da aplicação Go
+FROM golang:1.22.5 AS builder
+
+WORKDIR /app
+
+# Isso aproveita o cache do Docker se os módulos não mudarem.
+COPY go.mod go.sum* ./
+
+# Copia o restante do código da aplicação.
+# Isso garante que todos os arquivos .go sejam copiados.
+COPY . .
+
+# Compila a aplicação Go
+RUN CGO_ENABLED=0 GOOS=linux go build -v -a -ldflags="-s -w" -o /app/server .
+
+# Estágio 2: Imagem final com Nginx e a aplicação Go
+FROM nginx:alpine
+
+# Copia o binário compilado do Go do estágio de build
+COPY --from=builder /app/server /usr/local/bin/server
+
+# Garante que o binário Go é executável
+RUN chmod +x /usr/local/bin/server
+
+# Expõe a porta que o Nginx vai escutar
+EXPOSE 80
+
+# Comando para iniciar a aplicação Go em background e o Nginx em foreground
+# Usamos `sh -c` para executar múltiplos comandos.
+# A aplicação Go precisa estar rodando para o Nginx conseguir fazer o proxy.
+CMD ["sh", "-c", "/usr/local/bin/server & nginx -g 'daemon off;'"]
