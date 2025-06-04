@@ -62,7 +62,7 @@ Irá funcionar corretamente, agora na prática, temos um gateway na frente do no
 
 ## Adicionando key ao APIM
 
-Vamos acessar no menu lateral "Assinaturas" e iremos criar uma nova.
+Vamos acessar no menu lateral "Assinaturas" e criar uma nova.
 
 ![Image](https://github.com/user-attachments/assets/fab5a23c-7b43-4d8f-a62d-67a901cc1def)
 
@@ -84,7 +84,7 @@ Vamos clicar na opção "Novo registro" e definir os valores da config.
 
 ![Registro de aplicativo - gwt](https://github.com/user-attachments/assets/7bfa1415-f8f5-4a6a-8c39-2223da049b95)
 
-Após criada a app no Microsoft Entra, teremos o seguinte retorno, vamos copiar o client id, url de geração do token e o link do OIDC.
+Após a criação do aplicativo no Microsoft Entra, teremos o seguinte retorno: vamos copiar o Client ID, a URL de geração do token e o link do OIDC.
 Essas informações vamos utilizar no insomnia e na configuração da API no APIM.
 
 ![copy-clientid-oauth-openid](https://github.com/user-attachments/assets/49aade5d-9f2f-42d7-b40e-6f2c922a7ad7)
@@ -113,7 +113,7 @@ Configuração do escopo.
 
 ![Config-criacao-escopo](https://github.com/user-attachments/assets/e869bad5-1152-42a0-b1b6-f900969002d1)
 
-É possível realizar a request com o scope do graph, mas vamos utilizar o que criamos. Para isso precissamos dar permissão a ele.
+É possível realizar a request com o scope do graph, mas vamos utilizar o que criamos. Para isso, precissamos dar permissão a ele.
 
 ![User-read](https://github.com/user-attachments/assets/38ef94f6-0b71-48bf-8d63-d6cb48e5dc62)
 
@@ -121,7 +121,7 @@ Realizamos a solicitação de permissão para nossa app.
 
 ![Solicitar permissao app](https://github.com/user-attachments/assets/1d89b956-4c4f-4657-b1de-3c6682ffe1be)
 
-Após finalizado o processo vamos copiar o scope e adicinar na resquest.
+Após finalizado o processo vamos copiar o scope e adicionar na resquest.
 
 ![Adicionando-scope-request](https://github.com/user-attachments/assets/0b0da48a-e6cc-4a0a-b0a2-4f75b692282e)
 
