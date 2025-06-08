@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Gerador de Boleto</title>
+  <link rel="stylesheet" href="bankslip.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="container">
+    <div class="split">
+      <!-- Existing functionality -->
+      <div class="left">
+        <h2>Gerar Boleto</h2>
+        <form id="boletoForm" autocomplete="off">
+          <label for="amount">Valor (R$)</label>
+          <input type="number" id="amount" name="amount" step="0.01" min="0" required placeholder="Ex: 432.47" />
+
+          <label for="dueDate">Data de vencimento</label>
+          <input type="date" id="dueDate" name="dueDate" required />
+
+          <button type="submit" id="submitBtn">Gerar boleto</button>
+        </form>
+        <div id="error" class="error" style="display:none;"></div>
+        <div id="result" class="result" style="display:none;">
+          <img id="barcodeImg" class="barcode-img" alt="Código de barras do boleto" />
+          <div id="barcodeText" class="barcode-text"></div>
+        </div>
+      </div>
+
+      <!-- New functionality -->
+      <div class="divider"></div>
+      <div class="right">
+        <h2>Validador de Código de Barras</h2>
+        <form id="validateForm" autocomplete="off">
+          <label for="barcode">Código de Barras</label>
+          <input type="text" id="barcode" name="barcode" required placeholder="Insira o código de barras" />
+          <div id="validateError" class="warn" style="display:none;"></div>
+          <div id="validateResult" class="result" style="display:none;">
+            <p><strong>Valor (R$):</strong> <span id="validateAmount"></span></p>
+            <p><strong>Data de Vencimento:</strong> <span id="validateDueDate"></span></p>
+            <p><strong>Código de Barras:</strong> <span id="validateBarcode"></span></p>
+          </div>
+          <button type="submit" id="validateBtn">Validar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="bankslip.js"></script>
+</body>
+</html>

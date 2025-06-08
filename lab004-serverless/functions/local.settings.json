@@ -1,7 +1,7 @@
 {
   "IsEncrypted": false,
   "Values": {
-    "AzureWebJobsStorage": "",
+    "AzureWebJobsStorage": "URL_TO_YOUR_STORAGE_ACCOUNT",
     "FUNCTIONS_WORKER_RUNTIME": "node"
   }
 }
