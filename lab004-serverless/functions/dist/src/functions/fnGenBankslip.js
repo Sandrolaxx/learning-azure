@@ -91,7 +91,7 @@ function validateRequest(payload, context) {
 }
 functions_1.app.http('generate-bankslip', {
     methods: ['POST'],
-    authLevel: 'anonymous',
+    authLevel: 'function',
     handler: fnGenBankslip
 });
 //# sourceMappingURL=fnGenBankslip.js.map

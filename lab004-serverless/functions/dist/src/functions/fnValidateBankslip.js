@@ -50,7 +50,7 @@ exports.fnValidateBankslip = fnValidateBankslip;
 ;
 functions_1.app.http('validate-bankslip', {
     methods: ['POST'],
-    authLevel: 'anonymous',
+    authLevel: 'function',
     handler: fnValidateBankslip
 });
 //# sourceMappingURL=fnValidateBankslip.js.map

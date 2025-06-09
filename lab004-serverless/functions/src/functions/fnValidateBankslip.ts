@@ -46,6 +46,9 @@ export async function fnValidateBankslip(request: HttpRequest, context: Invocati
 
 app.http('validate-bankslip', {
     methods: ['POST'],
+    //No menu à esquerda, em "Funções", clique em "Chaves de aplicativo".
+    //A chave _master pode ser usada para autenticação com headers - x-functions-key
+    // authLevel: 'function', Caso queira utilizar autenticação
     authLevel: 'anonymous',
     handler: fnValidateBankslip
 });
