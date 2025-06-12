@@ -1,0 +1,21 @@
+{
+  "name": "cep-api",
+  "version": "1.0.0",
+  "description": "A simple API to query ZIP code information using the ViaCEP API.",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "axios": "^0.21.1",
+    "joi": "^17.4.0"
+  },
+  "devDependencies": {
+    "jest": "^27.0.6",
+    "supertest": "^6.1.6"
+  },
+  "author": "Your Name",
+  "license": "MIT"
+}

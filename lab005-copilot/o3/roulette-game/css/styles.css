@@ -1,0 +1,37 @@
+/* styles.css */
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+canvas {
+    border: 2px solid #333;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.roulette-wheel {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    border: 10px solid #000;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.ball {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease;
+}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Testar CORS Endpoint</title>
+</head>
+<body>
+  <button id="testBtn">Testar CORS</button>
+  <pre id="result"></pre>
+  <script>
+    document.getElementById('testBtn').onclick = async function () {
+      const result = document.getElementById('result');
+      result.textContent = 'Aguardando resposta...';
+      try {
+        const response = await fetch('https://sample-func-157580013027.us-east1.run.app/');
+        const text = await response.text();
+        result.textContent = `Status: ${response.status}\n\n${text}`;
+      } catch (e) {
+        result.textContent = 'Erro: ' + e;
+      }
+    };
+  </script>
+</body>
+</html>
+
+<!-- w.Header().Set("Access-Control-Allow-Origin", "*")
+
+if r.Method == http.MethodOptions {
+    // Define os cabeçalhos para permitir a requisição
+    w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+    w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+    w.Header().Set("Access-Control-Max-Age", "3600")
+    
+    w.WriteHeader(http.StatusNoContent)
+    return // Interrompe a execução aqui
+} -->
