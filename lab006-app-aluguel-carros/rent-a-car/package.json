@@ -1,0 +1,16 @@
+{
+  "name": "rent-a-car",
+  "version": "1.0.0",
+  "description": "App de aluguel de carros",
+  "main": "index.js",
+  "author": "Sandrolaxx",
+  "license": "MIT",
+  "dependencies": {
+    "@azure/identity": "^4.10.1",
+    "@azure/service-bus": "^7.9.5",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "expess": "^0.0.1-security",
+    "express": "^5.1.0"
+  }
+}
