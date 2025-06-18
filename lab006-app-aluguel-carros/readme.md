@@ -110,3 +110,19 @@ az containerapp create \
 ```
 
 Após finalizado o processo, podemos buscar no json que retornou no bash pelo campo `latestRevisionFqdn`, com o valor dele já podemos bater na URL, aqui o exemplo `https://rent-car-api--0000001.ambitiousforest-cac6d885.eastus.azurecontainerapps.io/api/car-rental` que foi retornado em meu json, com isso já podemos consumir nosso serviço através de seu domínio.
+
+---
+
+#### Criando Function Consumo fila com Trigger
+
+Nesse ponto criamos a [função](./fnrentprocess/src/index.ts) que utiliza o [arquivo](./fnrentprocess/src/dbConnection.ts) para configurar a conexação com a base de dados. Definições de URL conection string está no `.env` e `local.settings.json`.
+
+Nesse fluxo nos consumimos a mensagem da fila `fila-locacao-auto`, pegamos essa mensagem e persistimos em nosso postgres na Azure, após isso criamos um novo objeto(Pagamento) e enviamos a mensagem para fila `fila-pagamento`.
+
+Podemos abaixo visualiza todo o fluxo realizado.
+
+![Image](https://github.com/user-attachments/assets/e33baddd-c4e9-4850-a2dc-b3d7186952f4)
+
+* Criação da mensagem na fila-locacao-auto
+* Consumo na base de dados
+* Registro na fila-pagamento.

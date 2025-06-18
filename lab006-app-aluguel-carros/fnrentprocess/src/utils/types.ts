@@ -1,10 +1,10 @@
-type RentCar = {
-    name: string,
-    email: string,
+export interface RentCar {
+    name: string;
+    email: string;
     vehicle: {
-        model: string,
-        year: number,
-        rentalTime: string
-    },
-    data: Date
+        model: string;
+        year: number;
+        rentalTime: string;
+    };
+    data: string;
 }

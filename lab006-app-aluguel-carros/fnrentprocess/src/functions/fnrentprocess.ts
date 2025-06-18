@@ -1,34 +1,77 @@
 import { app, InvocationContext } from "@azure/functions";
+import { connectToDb } from "../dbConnection";
+import { RentCar } from "../utils/types";
+import { ServiceBusClient } from "@azure/service-bus";
+import { generateRandomNumber } from "../utils/util";
 
-export async function fnRentProcess(message: any, context: InvocationContext): Promise<void> {
-    context.log('Service bus queue function processed message:', message.body);
+export async function fnRentProcess(message: RentCar, context: InvocationContext): Promise<void> {
+    context.log('Service bus queue function processed message (object):', message);
 
-    const rentCarData: RentCar = JSON.parse(message.body);
+    if (!message) {
+        context.error("Erro ao receber mensagem, mensagem nula ou vazia.");
+        return;
+    }
 
-    if (rentCarData.data == null || rentCarData.name == null || rentCarData.email == null) {
+    if (message.data == null || message.name == null || message.email == null) {
         context.error("Erro ao relizar processamento da mensagem, dados rentcar inválidos");
 
         return;
     }
 
-    const connection = await connectToDb();
-    const { name, email, vehicle, data } = rentCarData;
-    const { model, year, rentalTime } = vehicle;
+    let pgClient;
 
-    // Formate a data para o formato aceito pelo PostgreSQL (YYYY-MM-DD)
-    // const rentDate = new Date(data).toISOString().split('T')[0];
+    try {
+        pgClient = await connectToDb();
+        const { name, email, vehicle, data } = message;
+        const { model, year, rentalTime } = vehicle;
 
-    const query = `INSERT INTO car_rental (name, email, model, year, rental_time, rent_date)
-                    VALUES ($1, $2, $3, $4, $5, $6)`;
-    const values = [name, email, model, year, rentalTime, new Date(data)];
+        const rentDate = new Date(data).toISOString().split('T')[0];
 
-    await connection.query(query, values);
+        const query = `
+            INSERT INTO CAR_RENTAL (name, email, model, year, rental_time, rent_date)
+            VALUES ($1, $2, $3, $4, $5, $6)
+        `;
+        const values = [name, email, model, year, rentalTime, rentDate];
 
-    await connection.end();
+        await pgClient.query(query, values);
+
+        context.log('Dados inseridos no banco de dados com sucesso!');
+
+        await sendMessageToPay(message);
+    } catch (error) {
+        context.error(`Erro ao conectar ou inserir dados no banco de dados: ${error}`);
+        //Msg é enviada para DQL após 2 tentativas - configurada na criação da fila
+        return;
+    } finally {
+        if (pgClient) {
+            await pgClient.end();
+            context.log('Conexão com o banco de dados fechada.');
+        }
+    }
 }
 
-app.serviceBusQueue('fnRentProcess', {
-    connection: process.env.AZURE_SERVICE_BUS_CONNECTION_STRING,
-    queueName: 'fila-locacao-auto',
+async function sendMessageToPay(message: RentCar) {
+    const queueName = "fila-pagamento";
+
+    const sbClient = new ServiceBusClient(process.env.SERVICE_BUS_CONNECTION_STRING);
+    const sender = sbClient.createSender(queueName);
+    const messageObject = {
+        ...message,
+        amount: generateRandomNumber(100, 5000)
+    }
+    const sbMesssage = {
+        body: messageObject,
+        contentType: "application/json",
+        label: "rent-payment"
+    }
+
+    await sender.sendMessages(sbMesssage);
+    await sender.close();
+    await sbClient.close();
+}
+
+app.serviceBusQueue("fnRentProcess", {
+    connection: "ServiceBus",
+    queueName: "fila-locacao-auto",
     handler: fnRentProcess
 });
