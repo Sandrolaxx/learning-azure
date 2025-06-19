@@ -16,7 +16,7 @@ app.post("/api/car-rental", async (req, res) => {
         name,
         email,
         vehicle,
-        data: new Date().toISOString()
+        date: new Date().toISOString()
     }
 
     try {

@@ -49,10 +49,6 @@ Criação do Logic App para disparo de e-mail.
 
 ![Image](https://github.com/user-attachments/assets/3f30cea6-b8cc-4ec1-b7bd-9cf38125e321)
 
-E por fim criação do Key Vault para armazenamento de segredos da aplicação.
-
-![Image](https://github.com/user-attachments/assets/4b504fc2-f770-4f65-82a6-f7fb32aba55e)
-
 Teremos todos os seguintes recursos em nosso resource group.
 
 ![Image](https://github.com/user-attachments/assets/f2687c0b-0461-4452-a7d5-df5675cbf5e1)
@@ -126,3 +122,53 @@ Podemos abaixo visualiza todo o fluxo realizado.
 * Criação da mensagem na fila-locacao-auto
 * Consumo na base de dados
 * Registro na fila-pagamento.
+
+---
+
+#### Criando Function Consumo fila payment
+
+O objetivo dessa função é consumir `fila-pagamento`, salvar os dados no CosmosDB e após isso postar a mensagem na `fila-notificacao`, onde a mensagem será consumida por um Logic App que fará o envio do e-mail para o cliente.
+
+Claro antes de tudo criamos a fila chamada `fila-notificacao`.
+
+O fluxo lógico de conexão com os cosmos e postagem da mensagem na fila pode ser encontrado no [arquivo](./fnpayment/src/functions/fnPaymentProcess.ts).
+
+Após criação da base e container do CosmosDB, podemos executar a função e ter o retorno abaixo, permanência dos dados na base:
+
+![Image](https://github.com/user-attachments/assets/097797f3-4d65-484a-9995-160726491808)
+
+Com isso finalizamos a parte de desenvolvimento e iniciamos a criação de nosso Logic App, uma pena que o professor não apresentou a configuração do mesmo na aula, mas fui atrás de entender como o serviço funciona e como considerá-lo.
+
+---
+
+#### Configurando Logic App
+
+Primeiro ele inicia vazio, então adicionamos o primeiro passo que é o componente de "Quando uma mensagem recebida na fila", ou em inglês "When a message in rerceived in a queue (auto-complete)", vamos configurar nossa fila com nossa connection string e definir a fila alvo `fila-notificacao`.
+
+Após isso vamos realiza o processo do parse do json recebido na mensagem da fila. Para isso vamos adicionar outro componente buscando por "Parse JSON". Vamos **utilizar o payload como exemplo**(que está na fila) e cria uma função para fazer o parse no base64 recebido pela fila, pegar apenas o json do conteúdo e extrair os valores que estão no campo `data`.
+
+![Image](https://github.com/user-attachments/assets/3dd5e986-9a95-4e54-99ca-456808f22c0c)
+
+Após isso vamos realizar uma composição para facilitar a montagem do layout do e-mail, vamos adiciona mais um componente buscando por "Compose". Vamos clica na opção "raio" que nos permite acessar valores da etapa anterior e montar o tamplate da mensagem do e-mail.
+
+![Image](https://github.com/user-attachments/assets/4f3ee9b4-3567-49b3-b239-3d07a71166a2)
+
+Agora enfim vamos adicionar o componente de envio de e-mail utilizando o [Sendgrid](https://sendgrid.com/en-us), tentei utilizar os componentes do Outlook e Gmail, porém ambos tive problemas de utilização, no Gmail problema do connector ao utilizar juntamente com service bus e o Outlook problema de credencial.
+
+Para configurar o sendgrid é muito simples, buscamos na barra pelo componenete "Sendgrid" e selecionamos a opção "Enviar email (v4)".
+
+![Image](https://github.com/user-attachments/assets/da0716fd-210b-4bc6-acdf-8a32b341d556)
+
+Então configuramos o componente com nossa secret key do sendgrid. Aqui utilizamos os valores de etapas anteriores, assim como fizemos na montagem do tamplate do e-mail.
+
+![Image](https://github.com/user-attachments/assets/7ee7e567-743d-4619-82a7-2a94607e7549)
+
+Após toda essa configuração podemos executar nosso Logic App clicando na opção "Run", caso tenha mensagens na fila ele já vai consumir e realizar o processo de envio de e-mail, assim como podemos ver no print abaixo.
+
+![Image](https://github.com/user-attachments/assets/b9e37141-36df-4bbf-bd17-1865f2863929)
+
+Com isso finalizamos nosso lab, realizando todo o processo diposto no desenho da nossa arquitetura, tirando a questão do KeyVault que não foi apresentada.
+
+Não se esqueça de excluir o resource group para evitar surpresas em sua fatura do cartão!
+
+![Image](https://github.com/user-attachments/assets/a50030fc-5804-42a3-8f52-2c8f06d8d793)

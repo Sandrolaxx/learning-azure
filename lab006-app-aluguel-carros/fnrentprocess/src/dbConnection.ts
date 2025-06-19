@@ -1,7 +1,4 @@
-import { configDotenv } from "dotenv";
 import { Client } from "pg";
-
-configDotenv();
 
 export async function connectToDb(): Promise<Client> {
     try {

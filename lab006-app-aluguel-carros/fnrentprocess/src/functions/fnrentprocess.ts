@@ -12,9 +12,8 @@ export async function fnRentProcess(message: RentCar, context: InvocationContext
         return;
     }
 
-    if (message.data == null || message.name == null || message.email == null) {
+    if (message.date == null || message.name == null || message.email == null) {
         context.error("Erro ao relizar processamento da mensagem, dados rentcar inválidos");
-
         return;
     }
 
@@ -22,10 +21,10 @@ export async function fnRentProcess(message: RentCar, context: InvocationContext
 
     try {
         pgClient = await connectToDb();
-        const { name, email, vehicle, data } = message;
+        const { name, email, vehicle, date } = message;
         const { model, year, rentalTime } = vehicle;
 
-        const rentDate = new Date(data).toISOString().split('T')[0];
+        const rentDate = new Date(date).toISOString().split('T')[0];
 
         const query = `
             INSERT INTO CAR_RENTAL (name, email, model, year, rental_time, rent_date)
@@ -71,7 +70,7 @@ async function sendMessageToPay(message: RentCar) {
 }
 
 app.serviceBusQueue("fnRentProcess", {
-    connection: "ServiceBus",
+    connection: "SERVICE_BUS_CONNECTION_STRING",
     queueName: "fila-locacao-auto",
     handler: fnRentProcess
 });

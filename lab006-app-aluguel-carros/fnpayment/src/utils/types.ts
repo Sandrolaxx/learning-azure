@@ -1,4 +1,4 @@
-export interface RentCar {
+export interface IPaymentRent {
     name: string;
     email: string;
     vehicle: {
@@ -7,4 +7,11 @@ export interface RentCar {
         rentalTime: string;
     };
     date: string;
+    amount: number;
+}
+
+export enum EnumPaymentStatus {
+    APPROVED,
+    WAITING,
+    REPROVED
 }
