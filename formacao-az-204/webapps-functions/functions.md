@@ -77,4 +77,4 @@ Arquivo json feito upload no blob storage:
 ![Arquivo json](https://github.com/user-attachments/assets/469be519-dc52-4e99-94b8-724a439a9c15)
 
 Response da execução do http trigger que busca o arquivo json e retorna ele:
-![Trigger Http integrado](https://github.com/user-attachments/assets/469be519-dc52-4e99-94b8-724a439a9c15)
+![Trigger Http integrado](https://github.com/user-attachments/assets/052dc25c-2c02-4fcb-86ef-ec3c215f9d7f)

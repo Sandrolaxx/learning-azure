@@ -1,9 +1,0 @@
-{
-    "azureFunctions.deploySubpath": "formacao-az-204/webapps-functions/funcexercise",
-    "azureFunctions.postDeployTask": "npm install (functions)",
-    "azureFunctions.projectLanguage": "TypeScript",
-    "azureFunctions.projectRuntime": "~4",
-    "azureFunctions.projectLanguageModel": 4,
-    "azureFunctions.projectSubpath": "formacao-az-204/webapps-functions/funcexercise",
-    "azureFunctions.preDeployTask": "npm prune (functions)"
-}
