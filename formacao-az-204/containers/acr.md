@@ -1,83 +1,71 @@
-## Comandos para subir uma imagem - ACR
+## Azure Container Registry (ACR) 🐳
 
-Criando resource group:
-```
-az group create --name az204-acr-sandrolaxx --location eastus
-```
+Pense no ACR como o seu "Docker Hub Privado" dentro do Azure. É onde você armazena e gerencia suas imagens de contêiner.
 
-Criando ACR:
-```
-az acr create --resource-group az204-acr-sandrolaxx --name acrdemo01az0204 --sku Basic
-```
+#### Níveis de Serviço (SKUs) - CAI NA PROVA ⚠️
 
-Criando um dockerfile simples de exemplo:
-```
-echo FROM mcr.microsoft.com/hello-world > dockerfile
-```
+Você precisa saber quando usar o Premium.
 
-Criando imagem no acr:
-```
-az acr build --image sample/hello-world:v1 --registry acrdemo01az0204 --file dockerfile .
-```
+| SKU | Cenário | Recursos Chave |
+| --- | --- | --- |
+| **Basic** | Dev / Teste | Armazenamento limitado, sem recursos de rede avançados. |
+| **Standard** | Produção Padrão | Mais armazenamento e throughput. |
+| **Premium** | **Enterprise / Global** | **Geo-replication** (Replicação Geográfica), **Private Link** (Rede Privada), Content Trust (Assinatura de imagem). |
 
-Listagem das nossas imagens:
-```
-az acr repository list --name acrdemo01az0204 --output table
-```
+> **Dica de Ouro:** Se a questão falar sobre "uma única imagem disponível localmente em múltiplas regiões para baixa latência de download", a resposta é **ACR Premium com Geo-replicação**.
 
-Listagem das tags:
-```
-az acr repository show-tags --name acrdemo01az0204 --repository sample/hello-world --output table
-```
+#### Autenticação (Como logar?)
 
-Executar o container:
-```
-az acr run --registry acrdemo01az0204 --cmd '$Registry/sample/hello-world:v1' /dev/null
-```
+* **Admin User (Conta de Administrador):** Um switch simples ("Enable Admin User"). Gera usuário e senha fixos.
+* *Uso:* Testes rápidos e POCs. **Não recomendado** para produção ou CI/CD robusto.
 
-Deletar o resource group:
-```
-az group delete --name az204-acr-sandrolaxx --no-wait
-```
 
-## Comandos para executar uma imagem - ACI
+* **Managed Identity (Identidade Gerenciada):** A forma correta. O seu serviço (ACI, App Service) tem permissão `AcrPull` no registro. Sem senhas no código.
+* **Service Principal:** Usado em scripts de automação antigos ou ferramentas externas (Jenkins).
 
-Criando resource group:
-```
-az group create --name az204-aci-sandrolaxx --location eastus
-```
+#### ACR Tasks (Tarefas do ACR)
 
-Criando uma variável de ambiente para usar na imagem:
-```
-DNS_NAME_LABEL=aci-example-sandrolaxx
-```
+Isso é muito cobrado. O ACR não apenas guarda imagens, ele pode **construir** (build) e **atualizar** imagens.
 
-> Lembrando que toda vez que tiver que atualizar esse secret vai ser necessário criar o container novamente, sendo mais recomendado utilizar um cofre de segredos como key-vault.
+* **Comando:** `az acr build`
+* O que faz: Pega seu código local, envia para o ACR, o ACR sobe um contêiner temporário, roda o `docker build` e salva a imagem.
+* *Vantagem:* Você não precisa ter Docker instalado na sua máquina local.
 
-Aqui tive de executar um comando anterior para habilitar o container instance:
-```
-az provider register --namespace Microsoft.ContainerInstance
-```
 
-Comando para criação do container:
-```
-az container create --resource-group az204-aci-sandrolaxx \
-  --name sandrolaxx204container \
-  --image mcr.microsoft.com/azuredocs/aci-helloworld \
-  --ports 80 \
-  --os-type linux \
-  --dns-name-label $DNS_NAME_LABEL --location eastus \
-  --memory 1 \
-  --cpu 1
-```
+* **Gatilhos de Automação (Triggers):**
+1. **Commit de Código:** Quando você faz push no GitHub/Azure DevOps.
+2. **Base Image Update (Atualização da Imagem Base):**
+* *Cenário:* Sua aplicação usa `FROM node:18`. A equipe do Node lança um patch de segurança para a versão 18.
+* *O ACR Task:* Detecta que a imagem base mudou e **recompila automaticamente** sua aplicação para aplicar o patch de segurança. Isso é "OS Patching automático".
 
-Pegar a URL e verificar o status do serviço:
-```
-az container show --resource-group az204-aci-sandrolaxx \
-  --name sandrolaxx204container \
-  --query "{FQDN:ipAddress.fqdn, ProvisioningState:provisioningState}" \
-  --out table
-```
 
-Com isso podemos realizar um ping na URL do FQDN:
-![Url do FQDN](https://github.com/user-attachments/assets/4ccd95d7-8a79-42a1-8867-2f252d7980ed)
+### Vamos ao Teste Prático (Simulado)
+
+Sua empresa possui desenvolvedores no Brasil, Europa e Japão. Todos precisam baixar imagens Docker grandes do registro central para seus ambientes locais diariamente. Eles reclamam que o download é muito lento devido à distância da região "East US" onde o registro está.
+
+**O que você deve fazer para resolver isso com o mínimo esforço de gestão?**
+
+A) Criar um novo ACR Basic em cada região e copiar as imagens manualmente via script.
+
+B) Atualizar o ACR para a SKU Premium e configurar a Geo-replicação.
+
+C) Usar o Azure Traffic Manager para rotear os desenvolvedores.
+
+D) Usar CDN para fazer cache das imagens Docker.
+
+*Resposta abaixo*
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+**Letra B (ACR Premium Geo-replicação).**
+* Recurso nativo do Premium. Você clica no mapa, e o Azure sincroniza as imagens automaticamente. O desenvolvedor usa a **mesma URL** de login, mas baixa do servidor mais próximo automaticamente.
