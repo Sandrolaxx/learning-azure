@@ -86,3 +86,12 @@ Removendo resource group:
 ```
 az group delete --name az204-aci-sandrolaxx --no-wait
 ```
+
+---
+
+## Permissão utilização imagens ACR no ACI
+
+Precisamos dar acesso de admin para o ACR, que por padrão ele não vem configurado desse modo. Caso não fizermos esse comando não vai listar o registry do ACR nas criações de app no ACI. Comando para atualizar permissões de adm:
+```
+az acr update -name NOME_DO_ACR --admin-enabled true
+```
