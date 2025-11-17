@@ -6,7 +6,7 @@ Para a certificação, a Microsoft divide esse conhecimento em três partes:
 
 1. **Onde guardar:** [Azure Container Registry (ACR)](./acr.md).
 2. **Como rodar simples:** [Azure Container Instances (ACI)](./aci.md).
-3. **Como rodar complexo/escalável:** [Azure Container Apps (ACA)](./aca.md) e AKS (embora AKS caia muito pouco no AZ-204, o foco mudou para Container Apps).
+3. **Como rodar complexo/escalável:** [Azure Container Apps (ACA)](./aca.md) e [AKS](./aks.md) (embora AKS caia muito pouco no AZ-204, o foco mudou para Container Apps).
 
 ### Resumo Comparativo Formas de Executar Container
 
