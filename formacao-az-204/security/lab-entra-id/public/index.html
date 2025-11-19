@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Lab Entra ID</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 50px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        
+        .info-box {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: left;
+        }
+        
+        .info-box h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .info-box ul {
+            list-style-position: inside;
+            color: #555;
+            line-height: 2;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin: 10px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+        
+        .btn-secondary:hover {
+            background: #f8f9fa;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .feature {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .feature-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .feature h4 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .feature p {
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🔐</div>
+        <h1>Bem-vindo!</h1>
+        <p class="subtitle">Aplicação Web com Microsoft Entra ID</p>
+        
+        <div class="info-box">
+            <h3>📌 Sobre esta aplicação</h3>
+            <ul>
+                <li><strong>Área Pública:</strong> Esta página (sem autenticação)</li>
+                <li><strong>Área Autenticada:</strong> Perfil do usuário (requer login)</li>
+                <li><strong>Tecnologia:</strong> Microsoft Entra ID (Azure AD)</li>
+            </ul>
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🌐</div>
+                <h4>Acesso Público</h4>
+                <p>Conteúdo disponível sem autenticação</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔒</div>
+                <h4>Área Segura</h4>
+                <p>Protegida com Azure AD</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">👤</div>
+                <h4>SSO</h4>
+                <p>Single Sign-On corporativo</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">✅</div>
+                <h4>OAuth 2.0</h4>
+                <p>Autenticação moderna e segura</p>
+            </div>
+        </div>
+        
+        <div style="margin-top: 40px;">
+            <a href="/auth/signin" class="btn">🔐 Fazer Login com Microsoft</a>
+            <br>
+            <a href="/profile" class="btn btn-secondary">👤 Ver Perfil (Área Protegida)</a>
+        </div>
+        
+        <p style="margin-top: 30px; color: #999; font-size: 0.9em;">
+            💡 Para acessar a área protegida, você precisa estar autenticado
+        </p>
+    </div>
+</body>
+</html>

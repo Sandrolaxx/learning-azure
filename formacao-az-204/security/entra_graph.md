@@ -167,3 +167,22 @@ D) `$project=displayName`
 1. **B (Delegated Permission).** O app age em nome do usuário logado ("Me"). Application Permission daria acesso a *todos* os calendários da empresa, o que é inseguro e excessivo (Princípio do Menor Privilégio).
 2. **C (Managed Identity).** É a única opção que **elimina** o gerenciamento de credenciais. Key Vault (B) é seguro, mas você ainda precisaria de uma credencial para acessar o Key Vault. Managed Identity resolve o problema da "credencial zero".
 3. **B (`$select`).** `$filter` é para restringir linhas (quem), `$select` é para restringir colunas (quais dados).
+
+---
+
+## Lab do Microsoft Entra
+
+Foi realizada a criação de um servidor em node que retorna páginas web, contendo áreas autenticadas e áreas públicas, com a autenticação realizada via [MSAL](https://learn.microsoft.com/pt-br/entra/identity-platform/msal-overview).
+
+Para mais detalhes é possível encontar a documentação completa do projeto [aqui](./lab-entra-id/README.md).
+
+Abaixo algumas imagens do projeto e seu funcionamento.
+
+**Área pública**:
+![Área pública](https://github.com/user-attachments/assets/527fc3c9-ced8-47b3-bc6c-998f11463357)
+
+**Fluxo login**
+![Fluxo login](https://github.com/user-attachments/assets/84ec3b97-a93a-4684-bc3d-632bd3573c12)
+
+**Área autenticada**
+![Área autenticada](https://github.com/user-attachments/assets/3295d8ff-06a5-4c67-824f-73d5fa510903)
