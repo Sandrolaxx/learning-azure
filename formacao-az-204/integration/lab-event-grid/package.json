@@ -1,0 +1,16 @@
+{
+  "name": "lab-event-grid",
+  "version": "1.0.0",
+  "description": "Script simples para comunicação com Azure Event Grid",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": ["azure", "event-grid", "events"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@azure/eventgrid": "^5.4.0",
+    "dotenv": "^16.3.1"
+  }
+}
