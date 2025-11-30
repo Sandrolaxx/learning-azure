@@ -1,0 +1,17 @@
+{
+  "name": "service-bus-lab",
+  "version": "1.0.0",
+  "description": "Azure Service Bus lab - sending messages",
+  "main": "send-message.js",
+  "scripts": {
+    "start": "node send-message.js",
+    "send": "node send-message.js"
+  },
+  "keywords": ["azure", "service-bus", "messaging"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@azure/service-bus": "^7.9.4",
+    "dotenv": "^16.3.1"
+  }
+}
