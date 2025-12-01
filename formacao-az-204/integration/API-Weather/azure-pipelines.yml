@@ -1,0 +1,69 @@
+trigger:
+- main
+
+pool:
+  name: 'poolapiweather'
+  vmImage: 'ubuntu-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+stages:
+  - stage: Build
+    displayName: 'Build and Push Docker Image'
+    jobs:
+      - job: BuildAndPush
+        displayName: 'Build and Push to ACR'
+        steps:
+          - script: |
+              # Atualizar pacotes
+              sudo apt-get update
+              
+              # Instalar dependências
+              sudo apt-get install -y ca-certificates curl gnupg lsb-release
+              
+              # Adicionar chave GPG do Docker
+              sudo mkdir -p /etc/apt/keyrings
+              curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+              
+              # Adicionar repositório do Docker
+              echo \
+                "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+                $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+              
+              # Instalar Docker
+              sudo apt-get update
+              sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+              
+              # Adicionar usuário atual ao grupo docker
+              sudo usermod -aG docker $USER
+              
+              # Alterar permissões do socket (solução temporária para o pipeline)
+              sudo chmod 666 /var/run/docker.sock
+              
+              # Verificar instalação
+              docker --version
+              docker ps
+            displayName: 'Install Docker and Fix Permissions'
+
+          - task: NodeTool@0
+            displayName: 'Install Node.js'
+            inputs:
+              versionSpec: '20.x'
+
+          - script: |
+              npm install
+              npm run build
+            displayName: 'Install dependencies and build'
+            workingDirectory: '$(Build.SourcesDirectory)'
+
+          - task: Docker@2
+            displayName: 'Build and Push Docker Image'
+            inputs:
+              containerRegistry: 'acr-weather-api'
+              repository: 'acr-weather-api'
+              command: 'buildAndPush'
+              Dockerfile: '**/Dockerfile'
+              tags: |
+                $(Build.BuildId)
+                latest
