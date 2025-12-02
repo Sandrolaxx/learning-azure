@@ -81,22 +81,3 @@ curl http://localhost:3000/forecast/Rio%20de%20Janeiro
 
 ### Query Parameters
 - `lang`: Idioma da resposta (padrão: pt_br)
-
----
-
-## 📦 Deploy no Azure
-
-Criando grupo de recursos:
-```
-az group create --name az204-api-deploy --location eastus
-```
-
-Criando ACR para subir imagem da App:
-```
-az acr create --resource-group az204-api-deploy --name acrdeploy-api 4 --sku Basic
-```
-
-Delete do resource group:
-```
-az group delete --name az204-api-deploy --no-wait
-```
