@@ -81,3 +81,9 @@ curl http://localhost:3000/forecast/Rio%20de%20Janeiro
 
 ### Query Parameters
 - `lang`: Idioma da resposta (padrão: pt_br)
+
+---
+
+# Docs do Lab
+
+Para mais detalhes desse lab acessar a [doc dele](./lab-doc.md).
