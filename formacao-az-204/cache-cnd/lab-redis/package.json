@@ -1,0 +1,29 @@
+{
+  "name": "azure-redis-lab",
+  "version": "1.0.0",
+  "description": "Aplicação Node.js com TypeScript para demonstrar funcionalidades do Azure Redis Cache",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "azure",
+    "redis",
+    "cache",
+    "typescript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "redis": "^4.6.12",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.6",
+    "typescript": "^5.3.3",
+    "ts-node": "^10.9.2"
+  }
+}
