@@ -179,3 +179,35 @@ builder.Services.AddStackExchangeRedisCache(options =>
 4. **Connection Class?** -> `ConnectionMultiplexer` como **Singleton**.
 5. **Memória Cheia?** -> Ocorre **Eviction** (baseado em LRU).
 6. **Segurança?** -> Use porta **6380 (SSL)** e rote o Access Key sem downtime.
+
+---
+
+## Simulado Final
+
+Sessão Perdida Você migrou uma aplicação PHP para o Azure App Service e configurou o Autoscale para variar entre 2 e 10 instâncias. Usuários reclamam que precisam fazer login repetidamente durante a navegação. Qual a solução mais eficiente?
+
+A) Configurar a Afinidade de Sessão (ARR Affinity) no App Service.
+
+B) Configurar o Azure CDN para cachear os cookies de sessão.
+
+C) Implementar o Azure Cache for Redis e configurar o app PHP para salvar sessões nele.
+
+D) Aumentar o tamanho da instância (Scale Up) e fixar em 1 instância.
+
+(Resposta)
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+**Resposta C (Redis Session Store)**. ARR Affinity (A) funciona, mas cria desbalanceamento de carga (um servidor fica cheio e outros vazios). A solução correta para nuvem ("Stateless") é externalizar a sessão para o Redis.
