@@ -211,3 +211,9 @@ D) Aumentar o tamanho da instância (Scale Up) e fixar em 1 instância.
 .
 
 **Resposta C (Redis Session Store)**. ARR Affinity (A) funciona, mas cria desbalanceamento de carga (um servidor fica cheio e outros vazios). A solução correta para nuvem ("Stateless") é externalizar a sessão para o Redis.
+
+---
+
+## Lab utilizando Redis
+
+Podemos encontrar mais informações sobre o lab mão na massa [aqui](./lab-redis/lab-redis.md).
