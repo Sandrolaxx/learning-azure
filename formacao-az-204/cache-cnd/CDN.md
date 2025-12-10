@@ -157,3 +157,10 @@ D) Mudar o Tier da CDN de Standard para Premium.
 .
 
 **B (Purge)**. É a única forma de forçar a atualização imediata mantendo o mesmo nome de arquivo.
+
+
+---
+
+## Lab utilizando CDN
+
+Podemos encontrar mais informações sobre o lab mão na massa [aqui](./lab-cdn/readme.md).
